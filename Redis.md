@@ -34,6 +34,10 @@
 [高级特性](http://blog.csdn.net/u011204847/article/details/51302109)
 
 [redis优缺点总结](http://blog.csdn.net/oanqoanq/article/details/51281548)
+
+[Docker 安装 Redis](http://www.runoob.com/docker/docker-install-redis.html)
+
+[go+redis](https://studygolang.com/articles/4542)
 ## 安装
 
 ### 下载
@@ -52,7 +56,7 @@
 2. 解压
 3. cd到解压后目录
 4. 执行make(编译)
-5. 二进制文件是编译完成后在src目录下，通过命令启动Redis服务：src/redis-server
+5. 二进制文件是编译完成后在src目录下，通过命令启动Redis服务：src/redis-server redis.conf
 6. 新建shell（不要关前面的）,使用内置的客户端命令redis-cli使用redis
 7. 执行ping命令，如果出现PONG，则说明安装成功
 

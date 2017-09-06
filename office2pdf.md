@@ -1,5 +1,7 @@
 ## libreoffice
 
+soffice --help
+
 # mac
 [options](http://www.cnblogs.com/si812cn/p/5009428.html)
 
@@ -23,8 +25,6 @@ cmdstr := "/Applications/LibreOffice.app/Contents/MacOS/soffice --invisible --co
 ```
 
 ## linux
-
-[教程](http://blog.csdn.net/ljihe/article/details/77250206)
 
 - 下载libreoffice
 
