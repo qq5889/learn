@@ -1,0 +1,15 @@
+yarn config get registry
+
+yarn config set registry https://registry.yarnpkg.com
+
+https://registry.npm.taobao.org
+
+
+yarn add  xxxx
+增加一个库
+yarn remove xxxx 
+删除一个库
+不留任何痕迹
+
+Npm
+https://registry.npmjs.org/
