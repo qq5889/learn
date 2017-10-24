@@ -33,6 +33,9 @@ pdf2swf a.pdf b.swf -b
 htm:
 <embed src="b.swf"  type="application/x-shockwave-flash"  width="100%" height="700px">
 
+<embed src="http://127.0.0.1:4000/static/a.swf"  type="application/x-shockwave-flash"  width="100%" height="700px">
+          
+
 ```
 
 
@@ -118,18 +121,140 @@ htm:
 
 - 优点
 
- 前端显示为单张图片，没有整个文档的下载链接，最多下载单张图片
+ elements控制台看不到相关链接
+ 
+ 前端显示的为图片，无法复制文字内容
+ 
+ 分页显示，加载速度快
  
 - 缺点
-
- 使用上一页 下一页的形式，比较繁琐
  
-## react-pdf-js(Warning: Setting up fake worker.)
-
-- [地址](https://github.com/mikecousins/react-pdf-js)
-
- 效果以及优缺点同上
+ 在network控制台可以看到下载路径
  
-## react-pdf(Warning: Setting up fake worker.)
+ 无法加入cookie
+ 
+ 
+## react-pdf
 
 - [地址](https://github.com/wojtekmaj/react-pdf)
+
+- 优点
+
+ 请求可以带cookie
+ 
+ elements控制台看不到相关链接
+ 
+ 前端显示的为图片，无法复制文字内容
+ 
+ 可分页显示，也可要一次加载全部
+ 
+- 缺点
+ 
+ 如果选用一次性加载全部，速度会比较慢
+ 
+ 在network控制台可以看到下载路径
+ 
+```
+import React from 'react'
+
+import { Document, Page } from 'react-pdf';
+
+class MdInfo extends React.Component {
+  state = {
+    file: 'http://127.0.0.1:4000/res/preview/1/a.pdf?isD=false',
+    pageNumber: null,
+    numPages: null,
+  }
+
+  onDocumentLoadSuccess = ({ numPages }) =>
+    this.setState({
+      numPages,
+      pageNumber: 1,
+    })
+
+  handlePrevious = () => {
+    this.addPage(-1)
+  }
+
+  handleNext = () => {
+    this.addPage(1)
+  }
+
+  addPage = num => {
+    const { pageNumber } = this.state
+    this.changePage(pageNumber + num)
+  }
+
+  changePage = num => {
+    const { numPages } = this.state
+    let page = num
+    if (num < 1) {
+      page = 1
+    } else if (page > numPages) {
+      page = numPages
+    }
+    this.setState({ pageNumber: page })
+  }
+
+  renderPagination = (page, pages) => {
+    let previousButton = <li className="previous" onClick={this.handlePrevious}><a href="#"><i className="fa fa-arrow-left"></i> Previous</a></li>;
+    if (page === 1) {
+      previousButton = <li className="previous disabled"><a href="#"><i className="fa fa-arrow-left"></i> Previous</a></li>;
+    }
+    let nextButton = <li className="next" onClick={this.handleNext}><a href="#">Next <i className="fa fa-arrow-right"></i></a></li>;
+    if (page === pages) {
+      nextButton = <li className="next disabled"><a href="#">Next <i className="fa fa-arrow-right"></i></a></li>;
+    }
+    return (
+      <nav>
+        <ul className="pager">
+          {previousButton}
+          {nextButton}
+        </ul>
+      </nav>
+      )
+  }
+
+  render() {
+    const { file, numPages, pageNumber } = this.state
+    {/* 分页加载 */}
+    let pagination = null
+    if (numPages) {
+      pagination = this.renderPagination(pageNumber, numPages)
+    }
+    
+    return (
+      <div>
+        <div>
+          <div>
+            {/* 分页加载 */}
+            { pagination }
+            <Document
+              file={{ url: file, withCredentials: true }}
+              onLoadSuccess={this.onDocumentLoadSuccess}
+            >
+            {/* 分页加载 */}
+            <Page pageNumber={pageNumber} />
+              {/* { // 一次加载全部
+                Array.from(
+                  new Array(numPages),
+                  (el, index) => (
+                    <Page
+                      key={`page_${index + 1}`}
+                      pageIndex = {index}
+                      pageNumber={index + 1}
+                      onRenderSuccess={this.onPageRenderSuccess}
+                      width={Math.min(600, document.body.clientWidth - 52)}
+                    />
+                  ),
+                )
+              } */}
+              
+            </Document>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+```
