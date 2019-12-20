@@ -1,0 +1,52 @@
+.FormItem {
+  color: black;
+  height: 80px;
+  width: 100%;
+  position: relative;
+  margin-bottom: 10px;
+
+  .SmallLabel {
+    top: 0;
+    transform: none;
+    font-size: 14px;
+  }
+
+  >* {
+    position: absolute;
+    text-align: left;
+    font-size: 16px;
+  }
+
+  label {
+    color: rgb(43, 43, 43);
+    display: inline-block;
+    word-break: keep-all;
+    z-index: 1;
+    pointer-events: none;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s;
+
+    &.hasValue {
+      .SmallLabel;
+      color: rgb(176, 176, 176);
+    }
+  }
+
+  input {
+    top: 12px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid gray;
+    display: block;
+    width: 100%;
+
+    &:focus+label {
+      .SmallLabel;
+    }
+  }
+}
