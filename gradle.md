@@ -1,17 +1,29 @@
-#[gradle](https://docs.gradle.org/current/userguide/userguide.html)
-##gradle是什么
+# [gradle项目自动化建构工具](https://docs.gradle.org/current/userguide/userguide.html)
+
+- 作者：杨家祺
+
+## 目录
+
+- gradle是什么
+- 为什么使用 Groovy?
+- 特性说明
+- 安装
+- Projects 和 tasks
+
+## gradle是什么
 
 Gradle是一个基于Apache Ant和Apache Maven概念的项目自动化建构工具。它使用一种基于Groovy的特定领域语言(DSL)来声明项目设置，抛弃了基于XML的各种繁琐配置。 面向Java应用为主。当前其支持的语言限于Java、Groovy和Scala，计划未来将支持更多的语言。
 
-##为什么使用 Groovy?
+## 为什么使用 Groovy?
+
 完整的Gradle API是使用Groovy语言设计的。这是基于XML内部 [DSL](https://blog.csdn.net/yimi1995/article/details/76906573) 的优点。Gradle是其核心的通用构建工具; 它的主要焦点是Java项目。在这些项目中，团队成员要熟悉Java，这是为了更好的构建透明，给所有团队成员的项目。
 
  类似于 Python，Groovy或Ruby语言是最好的构建框架。为什么Groovy被选中？这是因为它为使用Java的人提供了迄今为止最大的透明度。Groovy的基本语法与Java是一样的。
 
 你可能会想说，为什么不能使用 Java 来作为构建脚本的语言。 我认为这是一个很有意义的问题。对你们的团队来讲，它确实会有最高的透明度和最低的学习曲线。 但由于 Java 本身的局限性，这种构建语言可能就不会那样友善、 富有表现力和强大。 [1] 这也是为什么像 Python，Groovy 或者 Ruby 这样的语言在这方面表现得更好的原因。 我们选择了 Groovy，因为它向 Java 人员提供了目前为止最大的透明度。 其基本的语法，类型，包结构和其他方面都与 Java 一样，Groovy 在这之上又增加了许多东西。但是和 Java 也有着共同点。
 
+## 特性说明
 
-##特性说明
 这里简述下 Gradle 的特点.
 
 - 声明式构建和合约构建
@@ -68,10 +80,9 @@ Gradle 完全支持你已有的 Maven 或者 lvy 仓库来构造发布或者提�
 
 > Gradle 是一个开源项目, 遵循 ASL 许可.
 
+## 安装
 
-##安装
-
-###前置准备
+### 前置准备
 Gradle 需要运行在一个 Java 环境里
 
 - 安装一个 Java JDK 或者 JRE. 而且 Java 版本必须至少是 6 以上.
@@ -79,7 +90,7 @@ Gradle 需要运行在一个 Java 环境里
 
 Gradle 使用任何已经存在在你的路径中的 JDK (可以通过 java -version 检查, 如果有就说明系统已经安装了 Java 环境). 或者, 你也可以设置 JAVA_HOME 环境参数来指定希望使用的JDK的安装目录.
 
-###安装配置
+### 安装配置
 [Gradle网站](https://gradle.org/install/)
 
 > 自动
@@ -93,7 +104,8 @@ Gradle 使用任何已经存在在你的路径中的 JDK (可以通过 java -ver
 
 最后gradle -v 测试下是否安装成功
 
-##Projects 和 tasks
+## Projects 和 tasks
+
 Gradle 里的任何东西都是基于这两个基础概念:
 
 - projects ( 项目 )
@@ -104,11 +116,12 @@ Gradle 里的任何东西都是基于这两个基础概念:
 每一个 project 是由一个或多个 tasks 构成的. 一个 task 代表一些更加细化的构建. 可能是编译一些 classes, 创建一个 JAR, 生成 javadoc, 或者生成某个目录的压缩文件.
 目前, 我们先来看看定义构建里的一些简单的 task. 以后的章节会讲解多项目构建以及如何通过 projects 和 tasks 工作.
 
-###创建gradle构建
+### 创建gradle构建
+
 >
 使用gradle命令运行Gradle构建。该gradle命令查找build.gradle当前目录中调用的文件。我们称这个build.gradle文件为构建脚本，但严格来说它是一个构建配置脚本。构建脚本定义项目及其任务。
 
-####定义任务,一切从hello world开始
+#### 定义任务,一切从hello world开始
 
 ```
 // gradle hello
@@ -142,7 +155,7 @@ task(hello) {
 
 ```
 
-####任务依赖
+#### 任务依赖
 请注意，在引用尚未定义的任务时，会报错。
 
 ```
@@ -189,7 +202,7 @@ task lib2  {
 }
 ```
 
-####动态任务
+#### 动态任务
 
 Groovy强大功能不仅可用于定义任务的功能。例如，您还可以使用它来动态创建任务。
 
@@ -204,7 +217,7 @@ Groovy强大功能不仅可用于定义任务的功能。例如，您还可以�
 }
 ```
 
-####操纵现有任务
+#### 操纵现有任务
 创建任务后，可以通过API访问它们。例如，您可以使用它在运行时动态地向任务添加依赖项。Ant不允许这样的事情。
 
 ```
@@ -236,7 +249,7 @@ hello.configure {
 }
 ```
 
-####Groovy DSL快捷方式表示法
+#### Groovy DSL快捷方式表示法
 
 有一种方便的表示法来访问现有任务。每个任务都可以作为构建脚本的属性使用
 例如将任务作为构建脚本的属性进行访问
@@ -252,7 +265,7 @@ hello.doLast {
 }
 ```
 
-####Extra task properties额外的任务属性
+#### Extra task properties额外的任务属性
 您可以将自己的属性添加到任务中。要添加名为的属性myProperty，请设置ext.myProperty为初始值。从那时起，可以像预定义的任务属性一样读取和设置属性。
 
 ```
@@ -283,7 +296,8 @@ task printProperties {
 }
 ```
 
-####默认任务
+#### 默认任务
+
 Gradle允许您定义在未指定其他任务时执行的一个或多个默认任务。
 
 ```
@@ -309,7 +323,8 @@ task other {
 ```
 这相当于执行 gradle clean run。在多项目构建中，每个子项目都可以拥有自己的特定默认任务。如果子项目未指定默认任务，则使用父项目的默认任务
 
-####标准项目属性
+#### 标准项目属性
+
 名称  | 类型|默认值
 ---           | ---          |-----
 project  | project |该Project实例
@@ -335,7 +350,7 @@ println group
 println version
 ```
 
-####声明变量
+#### 声明变量
 可以在构建脚本中声明两种变量：局部变量和额外属性。
 
 - 局部变量
@@ -370,10 +385,11 @@ task printProperties {
 
 ```
 
-####[使用文件](https://docs.gradle.org/current/userguide/working_with_files.html#sec:copying_single_file_example)
+#### [使用文件](https://docs.gradle.org/current/userguide/working_with_files.html#sec:copying_single_file_example)
 增删改查复制移动zip
 
-###构建生命周期
+### 构建生命周期
+
 Gradle的构建生命周期分为初始化，配置，执行三个阶段。初始化阶段主要是读取settings.gradle 文件，用于确定哪些项目参与构建，并创建Project实例；而配置阶段主要是为每个build.gradle 文件配置project对象；执行阶段主要是根据gradle命令和传入的参数创建并执行任务。
 
 Gradle构建过程有三个阶段。
@@ -390,8 +406,7 @@ Gradle可以构建一个和多个项目。在初始化阶段，Gradle会确定�
 
 Gradle确定要在执行期间创建和配置的任务子集。子集由传递给gradle命令和当前目录的任务名称参数确定。 Gradle然后执行每个选定的任务。
 
-
-####Settings文件
+#### Settings文件
 除了build.gradle 文件外，Gradle定义了一个settings文件。settings文件由Gradle通过命名约定确定。该文件默认明为settings.gradle
 settings.gradle是在初始化阶段执行。构建多个项目时，必须在根目录中有settings.gradle文件。因为在这个文件中定义了哪些项目参加构建。在构建Android项目时，我们会在根目录找到settings.gradle文件。除了定义包含的项目之外，您可能还需要将库添加到构建脚本类路径中。下面我们举一个简单的例子。
 include ':project2'
@@ -436,8 +451,9 @@ This is executed last during the execution phase.
 
 ```
 
-###Java项目
-####[java插件](https://www.w3cschool.cn/gradle/5vdr1hug.html)
+### Java项目
+
+#### [java插件](https://www.w3cschool.cn/gradle/5vdr1hug.html)
 
 ```
 plugins {
@@ -446,7 +462,8 @@ plugins {
 ```
 这个插件中定义了许多任务,源集任务,生命周期任务，详情[参考表 23.1-23.4](https://www.w3cschool.cn/gradle/5vdr1hug.html)
 
-####依赖项
+#### 依赖项
+
 指定Java项目的依赖项只需要三条信息：
 
 - 您需要哪种依赖项，例如名称和版本
@@ -488,4 +505,4 @@ testImplementation -在单元测试和打包测试apk的时候有效
 
 ```
 
-####[其他插件介绍](https://www.w3cschool.cn/gradle/5vdr1hug.html)
+#### [其他插件介绍](https://www.w3cschool.cn/gradle/5vdr1hug.html)
